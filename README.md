@@ -16,7 +16,7 @@
 # 启动
 直接启动即可
 # 访问
-http://localhost:80/admin/login
+http://localhost:80/admin/login.html
 
 # 初始用户名和密码设置
 
