@@ -1,0 +1,63 @@
+#content > h1{
+    border-style: solid !important;
+    border-left:5px  solid #F4606C !important;
+    border-top: none !important;
+    border-bottom: 1px solid #dddddd !important;
+    border-right: none !important;
+    padding-bottom: 2px !important;
+    padding-left: 10px!important;
+}
+#content > h2{
+    /*#FF7148*/
+    /*#33aebb */
+    border-style: solid !important;
+    border-left:5px  solid #35a100 !important;
+    border-top: none !important;
+    border-bottom: 1px solid #dddddd !important;
+    border-right: none !important;
+    padding-bottom: 2px !important;
+    padding-left: 10px!important;
+}
+#content > h3{
+    border-style: solid !important;
+    border-left:5px  solid #D1BA74 !important;
+    border-top: none !important;
+    border-bottom: 1px solid #dddddd !important;
+    border-right: none !important;
+    padding-bottom: 2px !important;
+    padding-left: 10px!important;
+}
+#content > h4{
+    border-style: solid !important;
+    border-left:5px  solid #E6CEAC !important;
+    border-top: none !important;
+    border-bottom: 1px solid #dddddd !important;
+    border-right: none !important;
+    padding-bottom: 2px !important;
+    padding-left: 10px!important;
+}
+#content > h5{
+    border-style: solid !important;
+    border-left:5px  solid #D6D5B7 !important;
+    border-top: none !important;
+    border-bottom: 1px solid #dddddd !important;
+    border-right: none !important;
+    padding-bottom: 2px !important;
+    padding-left: 10px!important;
+}
+#content > h6{
+    border-style: solid !important;
+    border-left:5px  solid #BEE7E9 !important;
+    border-top: none !important;
+    border-bottom: 1px solid #dddddd !important;
+    border-right: none !important;
+    padding-bottom: 2px !important;
+    padding-left: 10px!important;
+}
+#tuiJian img:hover{
+    transform: scale(1.2);
+    -webkit-transform: scale(1.2);
+    -moz-transform: scale(1.2);
+    -o-transform: scale(1.2);
+    -ms-transform: scale(1.2);
+}

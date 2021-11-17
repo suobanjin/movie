@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="zzuli.zw.blog.mapper.UserMapper">
+    <resultMap id="userMapper" type="zzuli.zw.blog.domain.User">
+        <id property="id" column="id" jdbcType="VARCHAR" javaType="String"/>
+        <result property="nickName" column="nickname" jdbcType="VARCHAR" javaType="String"/>
+        <result property="username" column="username" jdbcType="VARCHAR" javaType="String"/>
+        <result property="email" column="email" jdbcType="VARCHAR" javaType="String"/>
+        <result property="avatarUrl" column="avatar_url" jdbcType="VARCHAR" javaType="String"/>
+        <result property="type" column="type" jdbcType="INTEGER" javaType="Integer"/>
+        <result property="createDate" column="create_date" jdbcType="TIMESTAMP" javaType="Date"/>
+        <result property="updateDate" column="update_date" jdbcType="TIMESTAMP" javaType="Date"/>
+        <result property="password" column="password" jdbcType="VARCHAR" javaType="String"/>
+    </resultMap>
+    <select id="findByUsername" parameterType="zzuli.zw.blog.domain.User" resultMap="userMapper" resultType="zzuli.zw.blog.domain.User">
+        select id, nickname, username, email, avatar_url, type, create_date, update_date, password from user where username = #{username}
+    </select>
+    <select id="findIndexUserInfo" resultMap="userMapper" resultType="zzuli.zw.blog.domain.User">
+        select id,nickname,email,avatar_url from blog.user
+    </select>
+</mapper>

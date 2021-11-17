@@ -1,0 +1,234 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="zzuli.zw.blog.mapper.BlogMapper">
+    <resultMap id="blogMapper" type="zzuli.zw.blog.domain.Blog">
+        <id property="id" column="id" jdbcType="VARCHAR" javaType="String"/>
+        <result property="title" column="title" jdbcType="VARCHAR" javaType="String"/>
+        <result property="headerImageUrl" column="header_image_url" jdbcType="VARCHAR" javaType="String"/>
+        <result property="flag" column="flag" jdbcType="VARCHAR" javaType="String"/>
+        <result property="views" column="views" jdbcType="BIGINT" javaType="long"/>
+        <result property="appreciation" column="appreciation" jdbcType="BOOLEAN" javaType="boolean"/>
+        <result property="reprintStatement" column="reprintstatement" jdbcType="BOOLEAN" javaType="boolean"/>
+        <result property="comment" column="comment" jdbcType="BOOLEAN" javaType="boolean"/>
+        <result property="commend" column="commend" jdbcType="BOOLEAN" javaType="boolean"/>
+        <result property="createDate" column="create_date" jdbcType="TIMESTAMP" javaType="Date"/>
+        <result property="updateDate" column="update_date" jdbcType="TIMESTAMP" javaType="Date"/>
+        <result property="save" column="save" jdbcType="BOOLEAN" javaType="boolean"/>
+        <result property="typeId" column="type_id" jdbcType="VARCHAR" javaType="String"/>
+        <result property="commentCount" column="comment_count" jdbcType="BIGINT" javaType="long"/>
+        <result property="content" column="content" jdbcType="LONGVARCHAR" javaType="String"/>
+        <result property="description" column="description" jdbcType="VARCHAR" javaType="String"/>
+        <result property="like" column="like" jdbcType="BIGINT" javaType="long"/>
+        <result property="author" column="author" jdbcType="VARCHAR" javaType="String"/>
+        <result property="fromLink" column="from_link" jdbcType="VARCHAR" javaType="String"/>
+        <association property="type" javaType="zzuli.zw.blog.domain.Type">
+            <id property="id" column="type_id" jdbcType="VARCHAR" javaType="String"/>
+            <result property="typeName" column="type_name" jdbcType="VARCHAR" javaType="String"/>
+        </association>
+        <collection property="tags" ofType="zzuli.zw.blog.domain.Tag">
+            <id property="id" column="tag_id" jdbcType="VARCHAR" javaType="String"/>
+            <result property="tagName" column="tag_name" jdbcType="VARCHAR" javaType="String"/>
+        </collection>
+    </resultMap>
+    <resultMap id="archivesMapper" type="zzuli.zw.blog.domain.Archives">
+        <id property="id" column="id" jdbcType="VARCHAR" javaType="String"/>
+        <result property="title" column="title" jdbcType="VARCHAR" javaType="String"/>
+        <result property="flag" column="flag" jdbcType="VARCHAR" javaType="String"/>
+        <result property="year" column="year" jdbcType="VARCHAR" javaType="String"/>
+        <result property="monthDay" column="month_day" jdbcType="VARCHAR" javaType="String"/>
+    </resultMap>
+    <select id="findBlogs" resultMap="blogMapper" resultType="zzuli.zw.blog.domain.Blog">
+        select b.id,b.save,b.title,b.type_id,b.commend,b.comment,b.update_date,t.type_name from blog b left join type t on b.type_id = t.id
+                        <where>
+                            <if test="param1 != null and param1 != ''">
+                                b.title like CONCAT('%',#{param1},'%')
+                            </if>
+                            <if test="param2 != null and param2 != ''">
+                               and b.type_id = #{param2}
+                            </if>
+                            <if test="param3 == true">
+                                and b.commend = #{param3}
+                            </if>
+                        </where>
+    </select>
+    <delete id="deleteBlog" parameterType="String">
+        delete from blog where id = #{param1}
+    </delete>
+    <delete id="deleteBlogs" parameterType="List">
+        delete from blog where id in
+                                    <foreach collection="list" index="index" item="item" open="(" separator=","  close=")">
+                                        #{item}
+                                    </foreach>
+    </delete>
+    <insert id="insertOne" parameterType="zzuli.zw.blog.domain.Blog">
+        insert into blog(id, title, header_image_url, flag, views, appreciation, reprintstatement, comment, commend,
+                         create_date, update_date, save, type_id, comment_count, content,description,author,from_link,`like`) VALUES
+        (#{id},#{title},#{headerImageUrl},#{flag},#{views},#{appreciation},#{reprintStatement},#{comment},#{commend},
+         #{createDate},#{updateDate},#{save},#{typeId},#{commentCount},#{content},#{description},#{author},#{fromLink},#{like})
+    </insert>
+    <select id="findById" parameterType="String" resultMap="blogMapper" resultType="zzuli.zw.blog.domain.Blog">
+        SELECT b.id,b.title,b.header_image_url,b.flag,b.views,b.appreciation,b.reprintStatement,b.comment,b.commend
+        ,b.save,b.type_id,t.id tag_id,t.tag_name,tp.type_name,author,from_link,content FROM
+                (
+                    SELECT id,title,header_image_url,flag,views,appreciation,reprintStatement,comment,commend
+                    ,save,type_id,author,from_link,content FROM blog
+                   where id = #{param1}
+                ) b
+                    LEFT JOIN blog_tags bt ON b.id = bt.blog_id
+                    LEFT JOIN type tp ON b.type_id = tp.id
+                    LEFT JOIN tag t ON t.id = bt.tag_id
+    </select>
+    <select id="findBlogDescriptionById" parameterType="String" resultType="String">
+        select description from blog.blog where id = #{id}
+    </select>
+    <select id="findIndexInfo" resultMap="blogMapper" resultType="zzuli.zw.blog.domain.Blog">
+        SELECT b.id,b.title,b.header_image_url,b.flag,b.views,b.create_date
+             ,b.save,b.type_id,t.id tag_id,t.tag_name,tp.type_name,author,b.update_date FROM
+            (
+                SELECT id,title,create_date,header_image_url,flag,views,save,type_id,author,update_date FROM blog
+                where save = 0
+                order by create_date desc
+                limit #{param1},#{param2}
+            ) b
+                LEFT JOIN blog_tags bt ON b.id = bt.blog_id
+                LEFT JOIN type tp ON b.type_id = tp.id
+                LEFT JOIN tag t ON t.id = bt.tag_id
+    </select>
+    <select id="findCount" resultType="Integer">
+        select count(id) from blog where save = 0
+    </select>
+    <select id="findAllBlogCount" resultType="Integer">
+        select count(id) from blog.blog
+    </select>
+    <select id="findSaveBlogCount" resultType="Integer">
+        select count(id) from blog where save = 1
+    </select>
+    <select id="findBlogIdAndTitle" parameterType="String" resultType="zzuli.zw.blog.domain.Blog" resultMap="blogMapper">
+        select id,title from blog where id = #{param1}
+    </select>
+    <select id="findBlogContentById" parameterType="String" resultType="String">
+        select content from blog where id = #{id}
+    </select>
+    <select id="findBlogNotNull" parameterType="String" resultType="zzuli.zw.blog.domain.Blog" resultMap="blogMapper">
+        select id from blog where id = #{param1}
+    </select>
+    <update id="updateBlog" parameterType="zzuli.zw.blog.domain.Blog">
+        update blog set title = #{title},flag = #{flag},header_image_url = #{headerImageUrl},content = #{content},
+                        type_id = #{typeId},commend = #{commend},comment = #{comment},appreciation = #{appreciation},
+                        reprintstatement = #{reprintStatement},save = #{save},description = #{description} ,update_date = #{updateDate},author = #{author}
+                        <if test="fromLink != null and fromLink != ''">
+                            ,from_link = #{fromLink}
+                        </if>
+        where id = #{id}
+    </update>
+    <select id="findCommendBlog" resultType="zzuli.zw.blog.domain.Blog" resultMap="blogMapper">
+        select id,title,views,`like` from blog.blog where save = 0 and commend = 1 order by create_date desc,`like` desc,views desc
+    </select>
+
+    <select id="findSearch" resultMap="blogMapper" resultType="zzuli.zw.blog.domain.Blog">
+        SELECT b.id,b.title,b.header_image_url,b.flag,b.views,b.create_date
+             ,b.save,b.type_id,t.id tag_id,t.tag_name,tp.type_name,author,b.update_date FROM
+            (
+                SELECT id,title,create_date,header_image_url,flag,views,save,type_id,author,update_date FROM blog
+                where save = 0 and (title like CONCAT('%',#{param3},'%') or content like CONCAT('%',#{param3},'%'))
+                order by create_date desc
+                limit #{param1},#{param2}
+            ) b
+                LEFT JOIN blog_tags bt ON b.id = bt.blog_id
+                LEFT JOIN type tp ON b.type_id = tp.id
+                LEFT JOIN tag t ON t.id = bt.tag_id
+    </select>
+
+    <select id="findSearchCount" resultType="Integer">
+        select count(id) from blog where save = 0 and (title like CONCAT('%',#{param1},'%') or content like CONCAT('%',#{param1},'%'))
+    </select>
+    <select id="findDetailBlogById" parameterType="String" resultMap="blogMapper" resultType="zzuli.zw.blog.domain.Blog">
+        SELECT b.id,b.title,b.header_image_url,b.flag,b.views,b.appreciation,b.reprintStatement,b.comment,b.commend
+             ,b.save,b.type_id,b.comment_count,b.update_date,b.create_date,b.like,b.description,t.id tag_id,t.tag_name,tp.type_name,author,from_link FROM
+            (
+                SELECT id,title,header_image_url,flag,views,appreciation,reprintStatement,comment,commend
+                     ,save,type_id,create_date,comment_count,`like`,author,from_link,description,update_date FROM blog
+                where save = 0 and id = #{param1}
+            ) b
+                LEFT JOIN blog_tags bt ON b.id = bt.blog_id
+                LEFT JOIN type tp ON b.type_id = tp.id
+                LEFT JOIN tag t ON t.id = bt.tag_id
+    </select>
+    <update id="updateViewsById" parameterType="String">
+        update blog set views = views + 1 where id = #{param1}
+    </update>
+    <update id="updateLikeById" parameterType="String">
+        update blog set `like` = `like` + 1 where id = #{param1}
+    </update>
+    <select id="findByTypeId" resultMap="blogMapper" resultType="zzuli.zw.blog.domain.Blog">
+        SELECT b.id,b.title,b.header_image_url,b.flag,b.views,b.create_date
+             ,b.save,b.type_id,t.id tag_id,t.tag_name,tp.type_name,author,b.update_date FROM
+            (
+                SELECT id,title,create_date,header_image_url,flag,views,save,type_id,author,update_date FROM blog
+                where save = 0 and type_id = #{typeId}
+                order by create_date desc
+                limit #{page},#{limit}
+            ) b
+                LEFT JOIN blog_tags bt ON b.id = bt.blog_id
+                LEFT JOIN type tp ON b.type_id = tp.id
+                LEFT JOIN tag t ON t.id = bt.tag_id
+    </select>
+    <select id="findDetailList" resultMap="blogMapper" resultType="zzuli.zw.blog.domain.Blog">
+        select id,title,flag,author,views,`like` from blog.blog where save = 0 and type_id = #{typeId} and id != #{id} order by views desc
+    </select>
+    <select id="findCountByType" parameterType="String" resultType="Integer">
+        SELECT count(id) FROM blog
+        where save = 0 and type_id = #{typeId}
+    </select>
+    <select id="findBlogByTag" resultType="zzuli.zw.blog.domain.Blog" resultMap="blogMapper">
+        SELECT b.id,b.title,b.header_image_url,b.flag,b.views,b.create_date
+             ,b.save,b.type_id,t.id tag_id,t.tag_name,tp.type_name,author,b.update_date FROM
+            (
+                SELECT id,title,create_date,header_image_url,flag,views,save,type_id,author,update_date FROM blog
+                where save = 0 and id in(select c_blog.blog_id from(SELECT blog_id FROM blog_tags WHERE tag_id = #{tagId} LIMIT #{page},#{limit}) as c_blog)
+                order by create_date desc
+            ) b
+                LEFT JOIN blog_tags bt ON b.id = bt.blog_id
+                LEFT JOIN type tp ON b.type_id = tp.id
+                LEFT JOIN tag t ON t.id = bt.tag_id
+    </select>
+    <select id="findBlogByTags" resultType="zzuli.zw.blog.domain.Blog" resultMap="blogMapper">
+        SELECT b.id,b.title,b.flag,b.views,b.`like`,b.author FROM
+            (
+                SELECT id,title,flag,views,author,`like` FROM blog
+                where save = 0 and id in(select c_blog.blog_id from(SELECT blog_id FROM blog_tags WHERE tag_id in
+                         <foreach collection="tags" index="index" item="item" open="(" separator="," close=")">
+                            #{item}
+                        </foreach>
+                        limit 0,6) as c_blog) and id != #{id}
+            ) b LEFT JOIN blog_tags bt ON b.id = bt.blog_id
+    </select>
+    <select id="findCountByTag" resultType="Integer" parameterType="String">
+        SELECT count(id) FROM blog_tags WHERE tag_id = #{tagId}
+    </select>
+    <select id="findArchives"  resultMap="archivesMapper">
+        select DATE_FORMAT(create_date,'%Y') year,DATE_FORMAT(create_date,'%m月%d日') month_day,title,id,flag from blog where save = 0 order by create_date
+    </select>
+    <select id="findMostViewsBlog" resultType="zzuli.zw.blog.domain.Blog" resultMap="blogMapper">
+        select id,title,`like`,views from blog.blog where save = 0 order by views desc limit 0,1
+    </select>
+    <select id="findHotBlogs" resultType="zzuli.zw.blog.domain.Blog" resultMap="blogMapper">
+        select title,id,`like`,create_date,author from blog.blog where save = 0 order by `like` desc,views desc limit 0,6
+    </select>
+    <select id="findDetailFavoriteList" resultType="zzuli.zw.blog.domain.Blog" resultMap="blogMapper">
+        select title,id,header_image_url from blog.blog where commend = 1 and save = 0 order by views desc limit 0,4
+    </select>
+    <select id="findTimelineInfo" resultMap="blogMapper" resultType="zzuli.zw.blog.domain.Blog">
+        select title,id,create_date from blog.blog where save = 0 order by create_date desc
+    </select>
+    <select id="findBefore" resultMap="blogMapper" resultType="zzuli.zw.blog.domain.Blog">
+        select title,id,flag from blog.blog where id &lt; #{id} and save = 0 order by id desc limit 0,1
+    </select>
+    <select id="findAfter" resultMap="blogMapper" resultType="zzuli.zw.blog.domain.Blog">
+        select title,id,flag from blog.blog where id > #{id} and save = 0 order by id asc limit 0,1
+    </select>
+    <select id="randomBlog" resultType="zzuli.zw.blog.domain.Blog" resultMap="blogMapper">
+        select id,title,author,flag,views,`like` from blog.blog where save = 0
+    </select>
+</mapper>

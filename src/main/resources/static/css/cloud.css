@@ -1,0 +1,16 @@
+.cloud a{
+    color: white!important;
+    font-weight: normal!important;
+}
+.cloud  a:nth-child(8n-7) { background: #8A9B0F }
+
+.cloud  a:nth-child(8n-6) { background: #EB6841 }
+.cloud  a:nth-child(8n-5) { background: #3FB8AF }
+.cloud  a:nth-child(8n-4) { background: #FE4365 }
+.cloud  a:nth-child(8n-3) { background: #FC9D9A }
+.cloud  a:nth-child(8n-2) { background: #EDC951 }
+.cloud  a:nth-child(8n-1) { background: #C8C8A9 }
+.cloud  a:nth-child(8n) { background: #83AF9B }
+.cloud  a:first-child { background: #036564 }
+.cloud a:last-child { background: #3299BB }
+.cloud  a:hover{ border-radius: 0!important; color: black!important; }

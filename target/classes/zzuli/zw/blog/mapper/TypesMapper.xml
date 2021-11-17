@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="zzuli.zw.blog.mapper.TypesMapper">
+    <resultMap id="typesMapper" type="zzuli.zw.blog.domain.Type">
+        <id property="id" column="id" jdbcType="VARCHAR" javaType="String"/>
+        <result property="typeName" column="type_name" jdbcType="VARCHAR" javaType="String"/>
+    </resultMap>
+    <resultMap id="blogTypeMapper" type="zzuli.zw.blog.domain.Type">
+        <id property="id" column="type_id" jdbcType="VARCHAR" javaType="String"/>
+        <result property="typeName" column="type_name" jdbcType="VARCHAR" javaType="String"/>
+        <result property="blogCount" column="blog_count" jdbcType="INTEGER" javaType="Integer"/>
+    </resultMap>
+    <select id="findAll" resultMap="typesMapper" resultType="zzuli.zw.blog.domain.Type">
+        select id,type_name from type
+                                    <if test="param1 != null and param1 != ''">
+                                        where type_name like CONCAT('%',#{param1},'%')
+                                    </if>
+    </select>
+    <update id="updateOne">
+        update type set type_name = #{param2} where id = #{param1}
+    </update>
+    <delete id="deleteOne" parameterType="String">
+        delete from type where id = #{param1}
+    </delete>
+    <delete id="deleteBatch" parameterType="List">
+        delete from type where id in 
+            <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+    </delete>
+    <insert id="insertOne" parameterType="zzuli.zw.blog.domain.Type">
+        insert into type(id, type_name) VALUES (#{id},#{typeName})
+    </insert>
+    <select id="findByTypeName" parameterType="String" resultMap="typesMapper" resultType="zzuli.zw.blog.domain.Type">
+        select id,type_name from type where type_name = #{param1}
+    </select>
+    <select id="findById" parameterType="String" resultMap="typesMapper" resultType="zzuli.zw.blog.domain.Type">
+        select id,type_name from type where id = #{param1}
+    </select>
+    <select id="findTypeAndCount" resultMap="blogTypeMapper" resultType="zzuli.zw.blog.domain.Type">
+        SELECT type_id,COUNT(b.id) blog_count,t.type_name FROM blog b
+            LEFT JOIN type t ON b.type_id = t.id where b.save = 0
+        GROUP BY type_id ORDER BY blog_count DESC limit 0,6
+    </select>
+    <select id="findTypeCount" resultType="Integer">
+        select count(id) from blog.type
+    </select>
+ </mapper>

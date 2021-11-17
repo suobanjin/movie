@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>主页</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="shortcut icon" th:href="@{/icon/favicon.ico}">
+    <link rel="shortcut icon" th:href="@{/icon/favicon.ico}">
+    <link rel="stylesheet" th:href="@{/layuiadmin/layui/css/layui.css}" media="all">
+    <link rel="stylesheet" th:href="@{/layuiadmin/style/admin.css}" media="all">
+</head>
+<body class="layui-layout-body">
+<div id="LAY_app">
+    <div class="layui-layout layui-layout-admin">
+        <!--头部导航-->
+        <div th:replace="~{admin/public/header::header}"></div>
+        <!--侧边菜单-->
+        <div th:replace="~{admin/public/sider::sider('index','index')}"></div>
+        <div class="layui-body" id="LAY_app_body" >
+            <div class="layui-fluid">
+                <div class="layui-row layui-col-space15">
+                    <div class="layui-col-sm6  layui-col-md3">
+                        <div class="layui-card">
+                            <div class="layui-card-header">基本信息</div>
+                            <div class="layui-card-body">
+
+                                <div class="layui-carousel layadmin-carousel layadmin-backlog">
+                                    <div carousel-item>
+                                        <ul class="layui-row layui-col-space10">
+                                            <li class="layui-col-xs6">
+                                                <a th:href="@{/admin/blogType}" class="layadmin-backlog-body">
+                                                    <h3>分类总数</h3>
+                                                    <p><cite>[[${types}]]</cite></p>
+                                                </a>
+                                            </li>
+                                            <li class="layui-col-xs6">
+                                                <a th:href="@{/admin/blogList}" class="layadmin-backlog-body">
+                                                    <h3>新闻总数</h3>
+                                                    <p><cite>[[${allBlog}]]</cite></p>
+                                                </a>
+                                            </li>
+                                            <li class="layui-col-xs6">
+                                                <a th:href="@{/admin/blogTag}" class="layadmin-backlog-body">
+                                                    <h3>标签总数</h3>
+                                                    <p><cite>[[${tags}]]</cite></p>
+                                                </a>
+                                            </li>
+                                            <li class="layui-col-xs6">
+                                                <a href="javascript:;" onclick="layer.tips('友链', this, {tips: 3});"
+                                                   class="layadmin-backlog-body">
+                                                    <h3>友链</h3>
+                                                    <p><cite>2</cite></p>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                        <ul class="layui-row layui-col-space10">
+                                            <li class="layui-col-xs6">
+                                                <a th:href="@{/admin/blogList}" class="layadmin-backlog-body">
+                                                    <h3>已发布</h3>
+                                                    <p><cite>[[${publishBlog}]]</cite></p>
+                                                </a>
+                                            </li>
+                                            <li class="layui-col-xs6">
+                                                <a href="javascript:;" class="layadmin-backlog-body">
+                                                    <h3>草稿</h3>
+                                                    <p><cite style="color: #FF5722;">[[${saveBlog}]]</cite></p>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-col-sm6 layui-col-md3">
+                        <div class="layui-card">
+                            <div class="layui-card-header">
+                                访问量
+                                <span class="layui-badge layui-bg-blue layuiadmin-badge">周</span>
+                            </div>
+                            <div class="layui-card-body layuiadmin-card-list">
+                                <p class="layuiadmin-big-font" th:text="${week}">9,999,666</p>
+                                <p>
+                                    总计访问量
+                                    <span class="layuiadmin-span-color">[[${total}]] <i
+                                            class="layui-inline layui-icon layui-icon-flag"></i></span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-col-sm6 layui-col-md3">
+                        <div class="layui-card">
+                            <div class="layui-card-header">
+                                留言总量
+                                <span class="layui-badge layui-bg-cyan layuiadmin-badge">总</span>
+                            </div>
+                            <div class="layui-card-body layuiadmin-card-list">
+                                <p class="layuiadmin-big-font"th:text="${comment}">33,555</p>
+                                <p>
+                                    &nbsp;
+                                    <span class="layuiadmin-span-color"></span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-col-sm6 layui-col-md3">
+                        <div class="layui-card">
+                            <div class="layui-card-header">
+                                浏览最多的新闻
+                                <span class="layui-badge layui-bg-green layuiadmin-badge">总</span>
+                            </div>
+                            <div class="layui-card-body layuiadmin-card-list">
+
+                                <a th:href="@{/blog/detail/{id}(id=${blog.id})}"><p class="layuiadmin-big-font" th:text="${blog.title}">999,666</p></a>
+                                <p>
+                                    浏览次数
+                                    <span class="layuiadmin-span-color">[[${blog.views}]] <i
+                                            class="layui-inline layui-icon layui-icon-flag"></i></span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-col-md12">
+                        <div class="layui-card">
+                            <div class="layui-card-header">数据概览</div>
+                            <div class="layui-card-body">
+
+                                <div class="layui-carousel layadmin-carousel layadmin-dataview" data-anim="fade"
+                                     lay-filter="LAY-index-dataview">
+                                    <div carousel-item id="LAY-index-dataview">
+                                        <div><i class="layui-icon layui-icon-loading1 layadmin-loading"></i></div>
+                                        <div></div>
+                                        <div></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-col-sm12">
+                    <div class="layui-row layui-col-space15">
+                        <div class="layui-col-sm6">
+                            <div class="layui-card">
+                                <div class="layui-card-header">热门新闻</div>
+                                <div class="layui-card-body">
+                                    <table class="layui-table layuiadmin-page-table" lay-skin="line">
+                                        <thead>
+                                        <tr>
+                                            <th>标题</th>
+                                            <th>作者</th>
+                                            <th>创建时间</th>
+                                            <th>获得赞</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr th:each="blog:${hot}" th:item-index="${blogStat.index}">
+                                            <td th:if="${blogStat.index+1 == 1}"><a th:href="@{/blog/detail/{id}(id=${blog.id})}"><span th:text="${blog.title}" class="first"></span></a></td>
+                                            <td th:if="${blogStat.index+1 == 2}"><a th:href="@{/blog/detail/{id}(id=${blog.id})}" ><span th:text="${blog.title}" class="second"></span></a></td>
+                                            <td th:if="${blogStat.index+1 == 3}"><a th:href="@{/blog/detail/{id}(id=${blog.id})}" ><span th:text="${blog.title}" class="third"></span></a></td>
+                                            <td th:if="${blogStat.index+1 > 3}"><a th:href="@{/blog/detail/{id}(id=${blog.id})}" ><span th:text="${blog.title}"></span></a></td>
+                                            <td><span th:text="${blog.author}"></span></td>
+                                            <td ><i class="layui-icon layui-icon-log"> [[${#dates.format(blog.createDate,'yyyy-MM-dd')}]]</i></td>
+                                            <td>[[${blog.like}]] <i class="layui-icon layui-icon-praise"></i></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script th:src="@{/layuiadmin/layui/layui.js}"></script>
+<script>
+    layui.config({
+        base: '../layuiadmin/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use(['index', 'sample', 'console']);
+</script>
+</body>
+</html>

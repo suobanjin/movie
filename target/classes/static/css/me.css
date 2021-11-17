@@ -1,0 +1,434 @@
+
+body {
+    background-image: url("https://cn.bing.com/th?id=OHR.BorobudurTemple_ZH-CN7851562404_1920x1080.jpg&rf=LaDigue_1920x1080.jpg&pid=hp");
+    background-attachment: fixed;
+    font: 14px/1.5 Tahoma,Helvetica,Arial,sans-serif;
+}
+#readContent{
+    opacity: 0.9!important;
+}
+.m-container.box-shadow-max{
+    background: fixed;
+}
+.m-padded-mini {
+    padding: 0.2em !important;
+}
+
+.m-padded-tiny {
+    padding: 0.3em !important;
+}
+
+.m-padded {
+    padding: 1em !important;
+}
+
+.m-padded-tb-mini {
+    padding-top: 0.2em !important;
+    padding-bottom: 0.2em !important;
+}
+
+.m-padded-tb-tiny {
+    padding-top: 0.3em !important;
+    padding-bottom: 0.3em !important;
+}
+
+.m-padded-tb-small {
+    padding-top: 0.5em !important;
+    padding-bottom: 0.5em !important;
+}
+
+.m-padded-tb {
+    padding-top: 1em !important;
+    padding-bottom: 1em !important;
+}
+
+.m-padded-tb-large {
+    padding-top: 2em !important;
+    padding-bottom: 2em !important;
+}
+
+.m-padded-tb-big {
+    padding-top: 3em !important;
+    padding-bottom: 3em !important;
+}
+
+.m-padded-tb-huge {
+    padding-top: 4em !important;
+    padding-bottom: 4em !important;
+}
+
+.m-padded-tb-massive {
+    padding-top: 5em !important;
+    padding-bottom: 5em !important;
+}
+
+
+.m-padded-lr-responsive {
+    padding-left: 4em !important;
+    padding-right: 4em !important;
+}
+.m-padded-lr-responsive-mini{
+    padding-left:1em !important;
+    padding-right: 1em !important;
+}
+/*-------text -----*/
+
+.m-text {
+    font-weight: 300 !important;
+    letter-spacing: 1px !important;
+    line-height: 1.8;
+}
+
+.m-text-thin {
+    font-weight: 300 !important;
+}
+
+.m-text-spaced {
+    letter-spacing: 1px !important;
+}
+
+.m-text-lined {
+    line-height: 1.8;
+}
+
+/*-----margin------*/
+
+.m-margin-top-small {
+    margin-top: 0.5em !important;
+}
+
+.m-margin-top {
+    margin-top: 1em !important;
+}
+
+.m-margin-top-large {
+    margin-top: 2em !important;
+}
+
+.m-margin-tb-tiny {
+    margin-top: 0.3em !important;
+    margin-bottom: 0.3em !important;
+}
+
+.m-margin-bottom-small {
+    margin-bottom: 0.5em !important;
+
+}
+
+.m-margin- {
+    margin-top: -4em !important;
+}
+
+.m-margin-top-large-large {
+    margin-top: 1px !important;
+}
+
+/*-----opacity------*/
+.m-opacity-mini {
+    opacity: 0.8 !important;
+}
+
+.m-opacity-very-mini{
+    opacity: 0.9 !important;
+}
+.m-not-opacity{
+    opacity: 1!important;
+}
+.m-opacity-tiny {
+    opacity: 0.6 !important;
+}
+
+/*------position---*/
+
+.m-right-top {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+/*------display------*/
+.m-inline-block {
+    display: inline-block !important;
+}
+
+
+/*-----container*/
+
+.m-container {
+    max-width: 72em !important;
+    margin: auto !important;
+}
+
+.m-container-mini{
+    max-width: 80em !important;
+    margin: auto !important;
+}
+
+.m-container-small {
+    max-width: 72em !important;
+    margin: auto !important;
+}
+
+/*------shadow------*/
+.m-shadow-small {
+    -webkit-box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2) !important;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2) !important;
+}
+
+/*------positon-----*/
+
+.m-fixed {
+    position: fixed !important;
+    z-index: 10 !important;
+}
+
+.m-right-bottom {
+    bottom: 0 !important;
+    right: 0 !important;
+}
+
+
+/*-----color-----*/
+.m-black {
+    color: #333 !important;
+}
+.m-teal{
+    color: #0085AD !important;
+}
+.m-mobile-show {
+    display: none !important;
+}
+
+@media screen and (max-width: 768px) {
+    .m-mobile-hide {
+        display: none !important;
+    }
+
+    .m-mobile-show {
+        display: block !important;
+    }
+
+    .m-padded-lr-responsive {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+
+    .m-mobile-lr-clear {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+
+    .m-mobile-wide {
+        width: 100% !important;
+    }
+}
+
+
+.fixed.overlay {
+    position: fixed;
+    background: black;
+    opacity: 0.7;
+    border-radius: 5px;
+}
+
+#tel a {
+    letter-spacing: 10px;
+}
+
+.box {
+    /*字体*/
+    font-size: 40px;
+    /*悬浮效果*/
+    position: fixed;
+    /*距离右边的距离*/
+    right: 10px;
+    /*距离底边的距离*/
+    bottom: 2%;
+    /*文字居中*/
+    text-align: center;
+    line-height: 50px;
+    /*初始不显示*/
+    display: none;
+    /*鼠标特效*/
+    cursor: pointer;
+    opacity: 0.8;
+}
+
+#whatever a {
+    word-spacing: 5px !important;
+    line-height: 1.5 !important;
+}
+
+.m-bg-type_outer {
+    display: block;
+    /*margin: 10px auto 0 0;*/
+    background-size: cover;
+    position: relative;
+    overflow: hidden;
+}
+
+.m-bg-class_cover {
+    width: 100%;
+    height: 750px;
+    line-height: 50px;
+    padding-left: 6px;
+    background-color: rgba(0, 0, 0, .60);
+    /*color: #FFFFFF;*/
+    /*font-size: 26px;*/
+    position: absolute;
+    left: 0px;
+    bottom: 0px;
+}
+
+.m-bg {
+    width: 100%;
+    height: 650px;
+    object-fit: cover;
+}
+
+
+.m-font-size-title-large {
+    font-size: 40px;
+    color: #ffffff;
+    font-family: STSong, sans-serif;
+}
+
+.m-font-size-title-mediul {
+    font-size: 30px;
+    color: #ffffff;
+    font-family: STSong, sans-serif;
+}
+
+.m-font-size-title {
+    font-size: 450%;
+    color: #ffffff;
+}
+
+.m-font-size-text {
+    font-size: 30px;
+    color: #ffffff;
+    /*font-family: STXihei;*/
+}
+
+.m-font-size-blog-text {
+    font-size: 18px;
+    color: #ffffff;
+    font-family: STSong, serif;
+}
+
+.m-font-size-text-friends {
+    font-size: 16px;
+    color: #000000;
+    font-family: STSong, serif;
+}
+
+.m-font-size-text-mini {
+    font-size: 16px;
+    color: #ffffff;
+}
+
+.m-font-size-text-init-title {
+    font-size: 24px;
+    color: #fffffc;
+    align-content: center;
+    font-family: 'STXingkai', sans-serif;
+}
+
+.m-detail-font {
+    color: #019688 !important;
+}
+
+.m-detail-font:hover {
+    color: #019688 !important;
+}
+
+.gird-header {
+    width: 100%;
+    min-height: 60px;
+    opacity: 0.6;
+    position: fixed;
+    background-color: rgba(0, 0, 0, 1);
+    z-index: 11002;
+    top: 0;
+    left: 0;
+    font-size: 15px;
+}
+
+.mobile-gird-header{
+    width: 100%;
+    min-height: 60px;
+    opacity: 0.7;
+    position: sticky;
+    background-color: rgb(27, 28, 29);
+    z-index: 11002;
+    top: 0;
+    left: 0;
+    font-size: 15px;
+}
+
+#example1 {
+    margin-top: 60px !important;
+}
+
+#favorite .ui.segment a:hover {
+    color: teal !important;
+}
+
+.share {
+    padding: 10px 20px;
+    background: #f7f7f7;
+    border-left: 3px solid #000;
+}
+.read {
+    background-color: #FFF2E2 !important;
+}
+
+.footer_link {
+    color: black!important;
+    font-size: 16px!important;
+    padding-top: 10px!important;
+}
+
+.footer_link:hover {
+    color: teal !important;
+    cursor: pointer!important;
+}
+#tuiJian a{
+    font-size: 14px!important;
+    color: #00a8c6!important;
+}
+#tuiJian a:hover{
+    color: black!important;
+}
+.bigger { transition:transform 1s; }
+.bigger:hover{ transform: scale(1.1,1.1);}
+.box-shadow-max{
+    border-radius: 2px;
+    box-shadow: 3px 3px 3px 0 rgba(0, 0, 0, .05);
+    -webkit-box-shadow: #000000 0 0 10px;
+    -moz-box-shadow: #000000 0 0 10px;
+}
+
+pre{
+    opacity: 0.85!important;
+}
+.code-read-mode{
+    background: none !important;
+    border: none !important;
+    /*font-family: Courier, 'Courier New', monospace!important;*/
+}
+.codeStyle-new{
+    font-family: 幼圆,sans-serif!important;
+    color: #666666!important;
+    font-size: 16px!important;
+    /*background-color: #f3f4f4!important;*/
+    background-color: #FFF2E2!important;
+    padding: 10px 10px!important;
+    /*80, 85, 107*/
+    display: block!important;
+    /*opacity: 0.95!important;*/
+    border-radius: 4px!important;
+}
+
+
+

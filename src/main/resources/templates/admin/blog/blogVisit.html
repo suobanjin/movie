@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="zh">
+<head>
+    <meta charset="utf-8">
+    <title>访客管理</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="shortcut icon" th:href="@{/icon/favicon.ico}">
+    <link rel="shortcut icon" th:href="@{/icon/favicon.ico}">
+    <link rel="stylesheet" th:href="@{/layuiadmin/layui/css/layui.css}" media="all">
+    <link rel="stylesheet" th:href="@{/layuiadmin/style/admin.css}" media="all">
+</head>
+<body class="layui-layout-body">
+<div id="LAY_app">
+    <div class="layui-layout layui-layout-admin">
+        <!--头部导航-->
+        <div th:replace="~{admin/public/header::header}"></div>
+        <!--侧边菜单-->
+        <div th:replace="~{admin/public/sider::sider('visit','visits')}"></div>
+
+        <!-- 主体内容 -->
+        <div class="layui-body" id="LAY_app_body" >
+            <div class="layui-fluid">
+                <div class="layui-card">
+                    <div class="layui-card-body">
+                        <table id="LAY-user-manage" lay-filter="LAY-user-manage"></table>
+                        <script type="text/html" id="table-useradmin-webuser">
+                            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i
+                                    class="layui-icon layui-icon-delete"></i>删除</a>
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 辅助元素，一般用于移动设备下遮罩 -->
+        <div class="layadmin-body-shade" layadmin-event="shade"></div>
+    </div>
+</div>
+
+<script th:src="@{/layuiadmin/layui/layui.js}"></script>
+<script>
+    layui.config({
+        base: '/layuiadmin/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use(['index', 'table', 'layer'], function () {
+        var $ = layui.$
+            , table = layui.table
+            , layer = layui.layer;
+
+        //初始化表格数据
+        let myTable = table.render({
+            elem: "#LAY-user-manage",
+            url: '/admin/visit',
+            limit: 5,  //要传向后台的每页显示条数
+            page: {   //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+                layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']//自定义分页布局
+                , limits: [5, 10, 15, 20, 25, 30, 35]
+                , first: false //不显示首页
+                , last: false //不显示尾页
+            },
+            cols: [
+                [
+                    {field: "id", title: "ID", sort: !0},
+                    {field: "ip", title: "IP"},
+                    {field: "location", title: "位置"},
+                    {field: "visitDate", title: "访问日期",templet: "<div>{{layui.util.toDateString(d.visitDate, 'yyyy-MM-dd HH:mm:ss')}}</div>"},
+                    {title: "操作", width: 150, align: "center", fixed: "right", toolbar: "#table-useradmin-webuser"}
+                ]
+            ],
+            height: "full-220",
+            text:
+                {
+                    none: '内容为空',
+                    error: '数据请求异常'
+                }
+        });
+
+        //工具栏事件
+        table.on("tool(LAY-user-manage)", function (obj) {
+            /*if ("del" === obj.event) layer.confirm("真的删除这一行么", function (t) {
+                layer.close(t);
+                $.ajax({
+                    type: 'GET',
+                    url: '/admin/deleteType/' + obj.data.id,
+                    success: function (data) {
+                        let json;
+                        if ((typeof data === 'string') && data.constructor === String) {
+                            if (data.charAt(0) === '<') {
+                                layer.msg('服务器异常，请稍后重试', {
+                                    icon: 5
+                                });
+                                return;
+                            }
+                            json = JSON.parse(data);
+                        } else {
+                            json = data;
+                        }
+                        if (json.code === 1) {
+                            layer.msg('删除成功', {
+                                icon: 6
+                            });
+                            obj.del();
+                        } else if (json.code === 2) {
+                            layer.msg(json.msg, {
+                                icon: 5
+                            });
+                        }
+                    },
+                    error: function () {
+                        layer.msg('服务器异常', {
+                            icon: 5
+                        })
+                    }
+                });
+            });
+            else if ("edit" === obj.event) {
+                parent.layer.open({
+                    type: 2,
+                    title: '编辑分类',
+                    shadeClose: true,
+                    shade: 0.8,
+                    area: ['20%', '20%'],
+                    content: '/admin/editSort?id=' + obj.data.id + "&typeName=" + obj.data.typeName,
+                    zIndex: layer.zIndex,
+                    success: function (layero) {
+                        layer.setTop(layero);
+                    },
+                    end: function () {
+                        let search = $('input[name="type"]').val();
+                        myTable.reload({
+                                where: {
+                                    'type': search
+                                },
+                                page: {
+                                    curr: $(".layui-laypage-em").next().html()
+                                }
+                            }
+                        );
+                    }
+                });
+            }*/
+        });
+    });
+</script>
+</body>
+</html>

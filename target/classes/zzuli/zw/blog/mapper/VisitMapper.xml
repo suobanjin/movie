@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="zzuli.zw.blog.mapper.VisitMapper">
+    <resultMap id="visitMapper" type="zzuli.zw.blog.domain.Visit">
+        <id property="id" column="id" jdbcType="VARCHAR" javaType="String"/>
+        <result property="ip" column="ip" jdbcType="VARCHAR" javaType="String"/>
+        <result property="location" column="location" jdbcType="VARCHAR" javaType="String"/>
+        <result property="visitDate" column="visit_date" jdbcType="TIMESTAMP" javaType="Date"/>
+    </resultMap>
+    <insert id="insertVisit" parameterType="zzuli.zw.blog.domain.Visit">
+        insert into blog.visit(blog.visit.id, blog.visit.ip, blog.visit.location, blog.visit.visit_date)
+                                                                                        values (#{id},#{ip},#{location},#{visitDate})
+    </insert>
+    <select id="findWeekCount" resultType="Integer">
+        select count(id) from blog.visit where YEARWEEK( date_format(  visit_date,'%Y-%m-%d' ) ) = YEARWEEK( now() )
+    </select>
+    <select id="findAllCount" resultType="Integer">
+        select count(id) from blog.visit
+    </select>
+    <select id="findAll" resultType="zzuli.zw.blog.domain.Visit" resultMap="visitMapper">
+        select id, ip, location, visit_date from blog.visit order by visit_date desc
+    </select>
+</mapper>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>视频预览</title>
+    <link rel="stylesheet" href="https://g.alicdn.com/de/prismplayer/2.8.1/skins/default/aliplayer-min.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+    <script type="text/javascript" charset="utf-8"
+            src="https://g.alicdn.com/de/prismplayer/2.8.1/aliplayer-min.js"></script>
+</head>
+<body>
+<div class="prism-player" id="player-con"></div>
+<input type="hidden" id="movieLink" th:value="${movie.movieLink}"/>
+<script>
+    const value = $('#movieLink').val();
+    console.log(value);
+    const player = new Aliplayer({
+            "id": "player-con",
+            "source": value,
+            "width": "100%",
+            "height": "500px",
+            "autoplay": true,
+            "isLive": false,
+            "rePlay": true,
+            "playsinline": true,
+            "preload": true,
+            "controlBarVisibility": "hover",
+            "useH5Prism": true
+        }, function (player) {
+            player._switchLevel = 0;
+        }
+    );
+</script>
+</body>
+</html>

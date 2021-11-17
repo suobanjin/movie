@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="zzuli.zw.blog.mapper.TagMapper">
+    <resultMap id="tagMapper" type="zzuli.zw.blog.domain.Tag">
+        <id property="id" column="id" jdbcType="VARCHAR" javaType="String"/>
+        <result property="tagName" column="tag_name" jdbcType="VARCHAR" javaType="String"/>
+        <result property="blogCount" column="blog_count" jdbcType="BIGINT" javaType="long"/>
+    </resultMap>
+    <select id="findAll" resultMap="tagMapper" resultType="zzuli.zw.blog.domain.Tag">
+        select id,tag_name from tag
+                                    <if test="param1 != null and param1 != ''">
+                                        where tag_name like CONCAT('%',#{param1},'%')
+                                    </if>
+    </select>
+    <select id="findTagCount" resultType="Integer">
+        select count(id) from blog.tag
+    </select>
+    <update id="updateOne">
+        update tag set tag_name = #{param2} where id = #{param1}
+    </update>
+    <delete id="deleteOne" parameterType="String">
+        delete from tag where id = #{param1}
+    </delete>
+    <delete id="deleteBatch" parameterType="List">
+        delete from tag where id in
+            <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+    </delete>
+    <insert id="insertOne" parameterType="zzuli.zw.blog.domain.Tag">
+        insert into tag(id, tag_name) VALUES (#{id},#{tagName})
+    </insert>
+    <select id="findByTagName" parameterType="String" resultMap="tagMapper" resultType="zzuli.zw.blog.domain.Tag">
+        select id,tag_name from tag where tag_name = #{param1}
+    </select>
+    <select id="findIndexTags" resultType="zzuli.zw.blog.domain.Tag" resultMap="tagMapper">
+        SELECT bt.tag_id id,COUNT(b.id) blog_count,t.tag_name
+        FROM blog_tags bt LEFT JOIN blog b ON bt.blog_id = b.id and b.save = 0
+                          LEFT JOIN tag t ON t.id = bt.tag_id
+        GROUP BY bt.tag_id
+        HAVING COUNT(b.id) > 0
+    </select>
+
+ </mapper>

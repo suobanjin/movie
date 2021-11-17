@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>500</title>
+    <link rel="shortcut icon" th:href="@{/icon/favicon.ico}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.css">
+    <link rel="stylesheet" th:href="@{/css/me.css}">
+</head>
+<body>
+
+<!--导航-->
+<div th:replace="~{admin/public/nav::nav('error')}"></div>
+<div class="m-container-small m-padded-tb-massive center aligned" style="margin-top: 200px !important;">
+    <div class="ui error message m-padded-tb-big">
+        <div class="ui container">
+            <h2>500</h2>
+            <p>服务器内部错误</p>
+        </div>
+    </div>
+    <a href="javascript:window.history.back()" class="ui teal icon button">
+        <i class="caret square left outline icon"></i>
+        返回上一页
+    </a>
+</div>
+<div>
+    <div th:utext="'&lt;!--'" th:remove="tag"></div>
+    <div th:utext="'Failed Request URL : ' + ${url}" th:remove="tag"></div>
+    <div th:utext="'Exception message : ' + ${exception.message}" th:remove="tag"></div>
+    <ul th:remove="tag">
+        <li th:each="st : ${exception.stackTrace}" th:remove="tag"><span th:utext="${st}" th:remove="tag"></span></li>
+    </ul>
+    <div th:utext="'--&gt;'" th:remove="tag"></div>
+</div>
+<br>
+<br>
+<!--底部footer-->
+<div th:replace="~{admin/public/footer::footer('280px')}"></div>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.js"></script>
+<script th:src="@{/js/image.js}"></script>
+<script>
+    $('.menu.toggle').click(function () {
+        $('.m-item').toggleClass('m-mobile-hide');
+    });
+</script>
+</body>
+</html>

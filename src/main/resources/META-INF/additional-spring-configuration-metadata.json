@@ -1,0 +1,13 @@
+{
+  "properties": [
+    {
+      "name": "spring.datasource.initialSize",
+      "type": "java.lang.String",
+      "description": "Description for spring.datasource.initialSize."
+    },
+    {
+      "name": "baseFilePath",
+      "type": "java.lang.String",
+      "description": "Description for baseFilePath."
+    }
+  ] }

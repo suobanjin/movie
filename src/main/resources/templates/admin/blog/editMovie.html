@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="zh">
+<head>
+    <meta charset="utf-8">
+    <title>修改电影信息</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="shortcut icon" th:href="@{/icon/favicon.ico}">
+    <link rel="shortcut icon" th:href="@{/icon/favicon.ico}">
+    <link rel="stylesheet" th:href="@{/layuiadmin/layui/css/layui.css}" media="all">
+    <link rel="stylesheet" th:href="@{/layuiadmin/style/admin.css}" media="all">
+    <link rel="stylesheet" th:href="@{/layuiadmin/editormd/css/editormd.min.css}"/>
+    <style>
+        select[multiple] + .layui-form-select > .layui-select-title > input.layui-input {border-bottom: 0}  select[multiple] + .layui-form-select dd {padding: 0;}  select[multiple] + .layui-form-select .layui-form-checkbox[lay-skin=primary] {margin: 0 !important;display: block;line-height: 36px !important;position: relative;padding-left: 26px;}  select[multiple] + .layui-form-select .layui-form-checkbox[lay-skin=primary] span {line-height: 36px !important;float: none;padding-left: 10px;}  select[multiple] + .layui-form-select .layui-form-checkbox[lay-skin=primary] i {position: absolute;left: 10px;top: 0;margin-top: 9px;}  .multiSelect {line-height: normal;height: auto;padding: 4px 10px;overflow: hidden;min-height: 38px;margin-top: -38px;left: 0; position: relative;background: none;}  .multiSelect a {padding: 2px 5px; /*background: #908e8e;*/border-radius: 3px;color: #fff;display: block;line-height: 20px;height: 20px;margin: 2px 5px 2px 0;float: left;background-color: #009688;} .multiSelect a span {float: left;}.multiSelect a i {float: left;display: block;margin: 2px 0 0 2px;border-radius: 2px;width: 8px;height: 8px;padding: 4px;position: relative;-webkit-transition: all .3s;transition: all .3s}  .multiSelect a i:before, .multiSelect a i:after {position: absolute;left: 8px;top: 2px;content: '';height: 12px;width: 1px;background-color: #fff}  .multiSelect a i:before {-webkit-transform: rotate(45deg);transform: rotate(45deg)}  .multiSelect a i:after {-webkit-transform: rotate(-45deg);transform: rotate(-45deg)}  .multiSelect a i:hover {background-color: #545556;}  .multiOption {display: inline-block;padding: 0 5px;cursor: pointer;color: #999;z-index: 1;}  .multiOption:hover {color: #5FB878}  @font-face {  font-family: "iconfont";  src: url('data:application/x-font-woff;charset=utf-8;base64,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') format('woff')  }  .iconfont {font-family: "iconfont", sans-serif !important;font-size: 16px;font-style: normal;-webkit-font-smoothing: antialiased;-moz-osx-font-smoothing: grayscale;}  .icon-fanxuan:before {content: "\e837";}  .icon-quanxuan:before {content: "\e623";}  .icon-qingkong:before {content: "\e63e";}  #md-content ol > li {list-style: decimal;}  #md-content ul > li {list-style: disc;}
+    </style>
+</head>
+<body class="layui-layout-body">
+<div id="LAY_app">
+    <div class="layui-layout layui-layout-admin">
+        <!-- 主体内容 -->
+        <div class="layui-body" id="LAY_app_body" style="margin-top: -50px">
+            <div class="layui-fluid">
+                <div class="layui-card">
+                    <div class="layui-card-header">修改电影信息</div>
+                    <div class="layui-card-body" style="padding: 15px;">
+                        <form class="layui-form layui-form-pane"  lay-filter="component-form-group">
+                            <input type="hidden" th:value="${movie.id}" name="id">
+                            <div class="layui-form-item">
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">电影标题</label>
+                                    <div class="layui-input-inline">
+                                        <input type="text" name="title" th:value="${movie.title}" lay-verify="title" autocomplete="off"
+                                               placeholder="请输入标题"
+                                               class="layui-input">
+                                    </div>
+                                </div>
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">电影大图</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" th:value="${movie.headerImageUrl}" name="headerImageUrl"  autocomplete="off" lay-verify="required|url"
+                                               class="layui-input" >
+                                    </div>
+                                </div>
+                                <button type="button" class="layui-btn layui-btn-sm layui-btn-normal" style="margin-top: -5px" id="uploadBefore">
+                                    <i class="layui-icon">&#xe64a;</i>本地图片
+                                </button>
+                                <button type="button" class="layui-btn layui-btn-sm layui-btn-normal" style="margin-top: -5px" id="upload">
+                                    <i class="layui-icon">&#xe67c;</i>确认上传
+                                </button>
+                            </div>
+                            <div class="layui-form-item">
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">导演</label>
+                                    <div class="layui-input-inline">
+                                        <input type="text" name="author" th:value="${movie.author}"  autocomplete="off"
+                                               placeholder="请输入导演"
+                                               class="layui-input">
+                                    </div>
+                                </div>
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">电影地址</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="movieLink" th:value="${movie.movieLink}"  autocomplete="off" lay-verify="required|url"
+                                               class="layui-input" >
+                                    </div>
+                                </div>
+                                &nbsp;
+                                <button type="button" class="layui-btn layui-btn-sm layui-btn-normal" style="margin-top: -5px" id="uploadMovie">
+                                    <i class="layui-icon">&#xe64a;</i>上传电影
+                                </button>
+                            </div>
+
+                            <div class="layui-form-item layui-form-text">
+                                <label class="layui-form-label">电影简介(描述)</label>
+                                <div class="layui-input-block">
+                                    <textarea name="description" th:value="${movie.description}" th:text="${movie.description}" id="description" placeholder="请输入内容" class="layui-textarea"></textarea>
+                                </div>
+                            </div>
+                            <div class="layui-form-item layui-layout-admin" style="z-index: 0">
+                                <div class="layui-input-block" style="z-index: 0">
+                                    <div class="layadmin-text-center"
+                                         style="margin-left: 300px;margin-top:50px;z-index: 0 !important;">
+                                        <button class="layui-btn layui-btn-normal" lay-submit=""
+                                                lay-filter="component-form-demo1">修改
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+<script th:src="@{/layuiadmin/layui/layui.js}"></script>
+<script>
+    $(function () {
+        $('#sideMenu').attr('style', 'z-index:0;');
+        $('#header').attr('style', 'z-index:0;');
+    });
+    layui.config({
+        base: '/layuiadmin/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use(['index', 'form', 'layer','laydate','upload','element'], function () {
+        const $ = layui.$
+            , layer = layui.layer
+            , laydate = layui.laydate
+            , form = layui.form
+            , upload = layui.upload;
+
+        upload.render({
+             elem: '#uploadBefore'
+            ,url: '/admin/upload'
+            ,auto: false
+            ,field: 'file'
+            ,bindAction: '#upload'
+            ,done: function(res, index, upload){ //上传后的回调
+                let json;
+                if ((typeof res === 'string') && res.constructor === String){
+                    if (res.charAt(0) === '<'){
+                        layer.msg('服务器异常',{
+                            icon: 5
+                        });
+                        return;
+                    }
+                    json = JSON.parse(res);
+                }else{
+                    json = res;
+                }
+                if (json.code === 2){
+                    layer.msg(json.msg,{
+                        icon: 5
+                    });
+                    return;
+                }
+                if (json.code === 1){
+                    let url = json.msg;
+                    layer.msg('图片上传成功',{
+                        icon: 6
+                        ,time: 500
+                    },function () {
+                        $('input[name = "headerImageUrl"]').val(url);
+                    })
+                }
+            }
+            ,choose: function (obj) {
+                obj.preview(function(index, file, result){
+                    parent.layer.open({
+                        type: 1,
+                        title: '预览',
+                        skin: 'layui-layer-rim', //加上边框
+                        area: ['600px', '400px'], //宽高
+                        content: '<img src="' + result + '" alt="" width="600" height="400"/>'
+                    });
+                });
+            }
+            ,accept: 'images' //允许上传的文件类型
+        });
+        upload.render({
+            elem:'#uploadMovie'
+            ,url: '/admin/uploadMovie'
+            ,auto: true
+            ,before: function(obj){ //obj参数包含的信息，跟 choose回调完全一致，可参见上文。
+                layer.load(3);
+            }
+            ,done: function(res, index, upload){ //上传后的回调
+                let json;
+                if ((typeof res === 'string') && res.constructor === String){
+                    if (res.charAt(0) === '<'){
+                        layer.msg('服务器异常',{
+                            icon: 5
+                        });
+                        return;
+                    }
+                    json = JSON.parse(res);
+                }else{
+                    json = res;
+                }
+                if (json.code === 2){
+                    layer.msg(json.msg,{
+                        icon: 5
+                    });
+                    layer.closeAll('loading'); //关闭loading
+                    return;
+                }
+                if (json.code === 1){
+                    let url = json.msg;
+                    layer.msg('视频上传成功',{
+                        icon: 6
+                    },function () {
+                        $('input[name = "movieLink"]').val(url);
+                        layer.closeAll('loading'); //关闭loading
+                    });
+                }
+            }
+            ,accept: 'video' //允许上传的文件类型
+            ,error: function (index,upload) {
+                layer.msg('上传失败，请稍后重试!',{
+                    icon: 5,
+                    time: 500
+                });
+                layer.closeAll('loading'); //关闭loading
+            }
+        });
+        $('#uploadMovie').click(function () {
+
+        });
+       form.render(null, 'component-form-group');
+        laydate.render({
+            elem: '#LAY-component-form-group-date'
+        });
+        /* 自定义验证规则 */
+        form.verify({
+            title: function (value) {
+                if (value.length < 5) {
+                    return '标题不得少于五个字符';
+                }
+            }
+        });
+
+        function postAjax(data,type,message){
+            data =data.field;
+            let index;
+            $.ajax({
+                type: 'POST',
+                url: '/admin/movie/edit/'+type,
+                data :
+                    {
+                        'id' : data.id,
+                        'title': data.title,
+                        'headerImageUrl' : data.headerImageUrl,
+                        'description': data.description,
+                        'author': data.author,
+                        'movieLink':data.movieLink
+                    },
+                beforeSend: function(){
+                   index =  layer.msg('提交中', {
+                        icon: 16
+                        ,shade: 0.01
+                    });
+                },
+                success: function (data) {
+                    let json;
+                    if ((typeof data === 'string') && data.constructor === String){
+                        if (data.charAt(0) === '<'){
+                            layer.msg('服务器请求异常',{
+                                icon: 5
+                            });
+                            return;
+                        }
+                        json = JSON.parse(data);
+                    }else json = data;
+                    if (json.code === 1){
+                        layer.msg(message,{
+                            icon: 6
+                        });
+                        return;
+                    }
+                    if (json.code === 2){
+                        layer.close(index);
+                        layer.msg(json.msg,{
+                            icon: 5
+                        });
+                    }
+                },
+                error: function () {
+                    layer.close(index);
+                    layer.msg('服务器错误请重新尝试',{
+                        icon: 5
+                    });
+                }
+            });
+        }
+        /* 监听提交 */
+        form.on('submit(component-form-demo1)', function (data) {
+            postAjax(data,'publish','修改成功');
+            return false;
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!-- 侧边菜单 -->
+<div class="layui-side layui-side-menu" th:fragment="sider(type,thisPage)" id="sideMenu">
+    <div class="layui-side-scroll">
+        <div class="layui-logo">
+            <span>轻大电影后台管理</span>
+        </div>
+
+        <ul class="layui-nav layui-nav-tree" lay-shrink="all" id="LAY-system-side-menu"
+            lay-filter="layadmin-system-side-menu">
+            <li data-name="home" th:class="${thisPage eq 'index'?'layui-nav-itemed layui-nav-item':'layui-nav-item'}">
+                <a th:href="@{/admin/index.html}" lay-tips="主页" lay-direction="2" th:class="${type eq 'index'?'layui-this':''}">
+                    <i class="layui-icon layui-icon-home"></i>
+                    <cite>主页</cite>
+                </a>
+            </li>
+            <li data-name="template" class="layui-nav-item" th:class="${thisPage eq 'blog'?'layui-nav-itemed layui-nav-item':'layui-nav-item'}">
+                <a href="javascript:;" lay-tips="文章管理" lay-direction="2">
+                    <i class="layui-icon layui-icon-template"></i>
+                    <cite>新闻管理</cite>
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a th:href="@{/admin/blogList}" th:class="${type eq 'blogList'?'layui-this':''}">新闻管理</a></dd>
+                    <dd><a th:href="@{/admin/writeBlog.html}" th:class="${type eq 'writeBlog'?'layui-this':''}">写新闻</a></dd>
+                </dl>
+            </li>
+            <li data-name="template" class="layui-nav-item" th:class="${thisPage eq 'movie'?'layui-nav-itemed layui-nav-item':'layui-nav-item'}">
+                <a href="javascript:;" lay-tips="电影管理" lay-direction="2">
+                    <i class="layui-icon layui-icon-play"></i>
+                    <cite>电影管理</cite>
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a th:href="@{/admin/movieList}" th:class="${type eq 'movieList'?'layui-this':''}">电影信息管理</a></dd>
+                    <dd><a th:href="@{/admin/writeMovie.html}" th:class="${type eq 'writeMovie'?'layui-this':''}">发布电影</a></dd>
+                </dl>
+            </li>
+            <li data-name="app" class="layui-nav-item" th:class="${thisPage eq 'tags'?'layui-nav-itemed layui-nav-item':'layui-nav-item'}">
+                <a href="javascript:;" lay-tips="标签管理" lay-direction="2">
+                    <i class="layui-icon layui-icon-note"></i>
+                    <cite>标签管理</cite>
+                </a>
+                <dl class="layui-nav-child">
+                    <dd ><a th:href="@{/admin/blogTag}" th:class="${type eq 'tag'?'layui-this':''}">标签管理</a></dd>
+                </dl>
+            </li>
+            <li data-name="senior" class="layui-nav-item" th:class=" ${thisPage eq 'types'?'layui-nav-itemed layui-nav-item':'layui-nav-item'}">
+                <a href="javascript:;" lay-tips="分类管理" lay-direction="2">
+                    <i class="layui-icon layui-icon-senior"></i>
+                    <cite>分类管理</cite>
+                </a>
+                <dl class="layui-nav-child">
+                    <dd>
+                        <a th:href="@{/admin/blogType}" th:class="${type eq 'type'?'layui-this':''}">分类管理</a>
+                    </dd>
+                </dl>
+
+            </li>
+            <li data-name="senior" class="layui-nav-item" th:class=" ${thisPage eq 'visits'?'layui-nav-itemed layui-nav-item':'layui-nav-item'}">
+                <a href="javascript:;" lay-tips="访客管理" lay-direction="2">
+                    <i class="layui-icon layui-icon-user"></i>
+                    <cite>访客管理</cite>
+                </a>
+                <dl class="layui-nav-child">
+                    <dd>
+                        <a th:href="@{/admin/blogVisit.html}" th:class="${type eq 'visit'?'layui-this':''}">访客管理</a>
+                    </dd>
+                </dl>
+
+            </li>
+        </ul>
+    </div>
+</div>
+</html>

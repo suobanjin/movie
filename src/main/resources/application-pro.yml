@@ -1,0 +1,77 @@
+spring:
+  #配置模板引擎
+  thymeleaf:
+    cache: false
+    prefix: classpath:/templates/
+    suffix: .html
+    mode: LEGACYHTML5
+    encoding: UTF-8
+    servlet:
+      content-type: text/html
+  #配置druid数据库连接池
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://localhost:3306/blog?useUnicode=true&characterEncoding=UTF-8
+    username: root
+    password:
+    driver-class-name: com.mysql.jdbc.Driver
+    initialSize: 5
+    minIdle: 5
+    maxActive: 20
+    maxWait: 60000
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT 1 FROM DUAL
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    # 配置监控统计拦截的 filters，去掉后监控界面 sql 无法统计，'wall'用于防火墙
+    filters: stat,wall
+    maxPoolPreparedStatementPerConnectionSize: 20
+    useGlobalDataSourceStat: true
+    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
+  cache:
+    type: redis
+  redis:
+    host: localhost   # host redis需要下载安装，然后启动，具体配置方式请百度
+    port: 6379        # 端口号
+    timeout: 2000ms   # 连接等待时间
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: false
+    static-path-pattern: /**
+  resources:
+    static-locations: classpath:/static/,file:C:\image
+  servlet:
+    multipart:
+      max-file-size: 4096MB
+      max-request-size: 4096MB
+
+#mybatis
+mybatis:
+  type-aliases-package: zzuli.zw.blog.domain
+  configuration:
+    log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
+  mapper-locations: classpath*:zzuli/zw/blog/mapper/*Mapper.xml
+logging:
+  config: classpath:logback-spring.xml
+  level:
+    root: info
+    zzuli:
+      zw:
+        blog:
+          mapper: debug
+server:
+  port: 80
+
+#pageHelper
+pagehelper:
+  offset-as-page-num: true
+  row-bounds-with-count: true
+  reasonable: false
+  support-methods-arguments: false
+  helper-dialect: mysql
+
+baseFilePath: C:\image

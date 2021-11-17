@@ -1,0 +1,39 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="zzuli.zw.blog.mapper.CommentMapper">
+    <resultMap id="commentMapper" type="zzuli.zw.blog.domain.Comment">
+        <id property="id" column="id" jdbcType="VARCHAR" javaType="String"/>
+        <result property="nickname" column="nickname" jdbcType="VARCHAR" javaType="String"/>
+        <result property="email" column="email" jdbcType="VARCHAR" javaType="String"/>
+        <result property="content" column="content" jdbcType="VARCHAR" javaType="String"/>
+        <result property="avatar" column="avatar" jdbcType="VARCHAR" javaType="String"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP" javaType="Date"/>
+        <result property="parentCommentId" column="parent_comment_id" jdbcType="VARCHAR" javaType="String"/>
+        <result property="adminComment" column="admin_comment" jdbcType="BIT" javaType="boolean"/>
+    </resultMap>
+    <insert id="insertOne" parameterType="zzuli.zw.blog.domain.Comment">
+        insert into comment(id, nickname, email, content, avatar,blog_id, parent_comment_id, admin_comment,create_time)
+        values (#{id},#{nickname},#{email},#{content},#{avatar},#{blogId},#{parentCommentId},#{adminComment},#{createTime})
+    </insert>
+    <!--查询父级评论-->
+    <select id="findByParentIdNull" parameterType="String" resultType="zzuli.zw.blog.domain.Comment" resultMap="commentMapper">
+        select  id, nickname, email, content, avatar, blog_id, parent_comment_id, admin_comment, create_time
+        from comment c
+        where c.parent_comment_id = #{param1} and blog_id = #{param2}
+        order by create_time
+    </select>
+    <select id="findChildren" parameterType="String" resultMap="commentMapper" resultType="zzuli.zw.blog.domain.Comment">
+        select id, nickname, email, content, avatar, blog_id, parent_comment_id, admin_comment, create_time
+        from comment
+        where parent_comment_id != '-1' and blog_id = #{param1}
+    </select>
+
+    <select id="findCountByBlogId" resultType="Integer" parameterType="String">
+        select count(id) from blog.comment where blog_id = #{blogId}
+    </select>
+    <select id="findCommentCount" resultType="Integer">
+        select count(id) from blog.comment
+    </select>
+
+</mapper>

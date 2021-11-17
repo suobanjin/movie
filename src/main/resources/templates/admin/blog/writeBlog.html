@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="zh">
+<head>
+    <meta charset="utf-8">
+    <title>写新闻</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="shortcut icon" th:href="@{/icon/favicon.ico}">
+    <link rel="shortcut icon" th:href="@{/icon/favicon.ico}">
+    <link rel="stylesheet" th:href="@{/layuiadmin/layui/css/layui.css}" media="all">
+    <link rel="stylesheet" th:href="@{/layuiadmin/style/admin.css}" media="all">
+    <link rel="stylesheet" th:href="@{/layuiadmin/editormd/css/editormd.min.css}"/>
+    <style>
+        select[multiple] + .layui-form-select > .layui-select-title > input.layui-input {border-bottom: 0}  select[multiple] + .layui-form-select dd {padding: 0;}  select[multiple] + .layui-form-select .layui-form-checkbox[lay-skin=primary] {margin: 0 !important;display: block;line-height: 36px !important;position: relative;padding-left: 26px;}  select[multiple] + .layui-form-select .layui-form-checkbox[lay-skin=primary] span {line-height: 36px !important;float: none;padding-left: 10px;}  select[multiple] + .layui-form-select .layui-form-checkbox[lay-skin=primary] i {position: absolute;left: 10px;top: 0;margin-top: 9px;}  .multiSelect {line-height: normal;height: auto;padding: 4px 10px;overflow: hidden;min-height: 38px;margin-top: -38px;left: 0; position: relative;background: none;}  .multiSelect a {padding: 2px 5px; /*background: #908e8e;*/border-radius: 3px;color: #fff;display: block;line-height: 20px;height: 20px;margin: 2px 5px 2px 0;float: left;background-color: #009688;} .multiSelect a span {float: left;}.multiSelect a i {float: left;display: block;margin: 2px 0 0 2px;border-radius: 2px;width: 8px;height: 8px;padding: 4px;position: relative;-webkit-transition: all .3s;transition: all .3s}  .multiSelect a i:before, .multiSelect a i:after {position: absolute;left: 8px;top: 2px;content: '';height: 12px;width: 1px;background-color: #fff}  .multiSelect a i:before {-webkit-transform: rotate(45deg);transform: rotate(45deg)}  .multiSelect a i:after {-webkit-transform: rotate(-45deg);transform: rotate(-45deg)}  .multiSelect a i:hover {background-color: #545556;}  .multiOption {display: inline-block;padding: 0 5px;cursor: pointer;color: #999;z-index: 1;}  .multiOption:hover {color: #5FB878}  @font-face {  font-family: "iconfont";  src: url('data:application/x-font-woff;charset=utf-8;base64,d09GRgABAAAAAAaoAAsAAAAACfwAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAABHU1VCAAABCAAAADMAAABCsP6z7U9TLzIAAAE8AAAARAAAAFZW7kokY21hcAAAAYAAAABwAAABsgdU06BnbHlmAAAB8AAAAqEAAAOUTgbbS2hlYWQAAASUAAAALwAAADYR+R9jaGhlYQAABMQAAAAcAAAAJAfeA4ZobXR4AAAE4AAAABMAAAAUE+kAAGxvY2EAAAT0AAAADAAAAAwB/gLGbWF4cAAABQAAAAAfAAAAIAEVAGhuYW1lAAAFIAAAAUUAAAJtPlT+fXBvc3QAAAZoAAAAPQAAAFBD0CCqeJxjYGRgYOBikGPQYWB0cfMJYeBgYGGAAJAMY05meiJQDMoDyrGAaQ4gZoOIAgCKIwNPAHicY2Bk/s04gYGVgYOpk+kMAwNDP4RmfM1gxMjBwMDEwMrMgBUEpLmmMDgwVLwwZ27438AQw9zA0AAUZgTJAQAokgyoeJzFkTEOgCAQBOdAjTH+wtbezvggKyteTPyFLpyFvsC9DNnbHIEA0AJRzKIBOzCKdqVW88hQ84ZN/UBPUKU85fVcrkvZ27tMc17FR+0NMh2/yf47+quxrtvT6cVJD7pinpzyI3l1ysy5OIQbzBsVxHicZVM9aBRBFJ43c7szyeV2s/97m9zP3ppb5ZID72+9iJfDnyIiGImCMZWFXaKdaSyuESJYCFZpRZBUCpaJcCCKaexsRVHQytrC2/Pt5ZSIy+z3vvnemwfvY4ZIhAw/s33mEoMcJyfJebJCCMgVKCk0B37YqNIKWL5kOabCwiD0eVCqsjPglGTTrrUaZUfmsgoK5KHu11phlYbQbHToaajZOYDsjLeqz83q7BFMumH+fnyRPgGrEMyqnYV4eX7JrBUNsTWl61ldfyhkSRKUplQFNh17QpqYlOOnkupZ+4UTtABT2dC7tJYpzug3txu3c3POBECvB8ZMUXm2pHkarnuebehZPp0RrpcJjpmw9TXtGlO58heCXwpnfcVes7PExknPkVWctFxSIUxANgs4Q9RaglYjjIKwCqGvANfy4NQtBL8DkYaipAVVaGqNVuTnoQBYg8NzHzNaJ7HAdpjFXfF2DSEjxF2ui7T8ifP2CsBiZTCsLCbxCv4UDvlgp+kFgQcHXgAQP64s0gdQdOOKWwSM8CGJz4V4c11gQwc70hTlH4XLv12dbwO052OotGHMYYj8VrwDJQ/eeSXA2Ib24Me42XvX993ECxm96LM+6xKdBCRCNy6TdfSDoxmJFXYBaokV5RL7K/0nOHZ9rBl+chcCP7kVMML6SGHozx8Od3ZvCEvlm5KQ0nxPTJtiLHD7ny1jsnxYsAF7imkq8QVEOBgF5Yh0yNkpPIenN2QAsSdMNX6xu85VC/tiE3Mat6P8JqWM73NLhZ9mzjBy5uAlAlJYBiMRDPQleQ+9FEFfJJImGnHQHWIEmm/5UB8h8uaIIzrc4SEPozByel3oDvFcN+4D+dU/uou/L2xv/1mUQBdTCIN+jGUEgV47UkB+Aw7YpAMAAAB4nGNgZGBgAGLbQwYd8fw2Xxm4WRhA4HrO20sI+n8DCwOzE5DLwcAEEgUAPX4LPgB4nGNgZGBgbvjfwBDDwgACQJKRARWwAgBHCwJueJxjYWBgYH7JwMDCgMAADpsA/QAAAAAAAHYA/AGIAcp4nGNgZGBgYGWIYWBjAAEmIOYCQgaG/2A+AwASVwF+AHicZY9NTsMwEIVf+gekEqqoYIfkBWIBKP0Rq25YVGr3XXTfpk6bKokjx63UA3AejsAJOALcgDvwSCebNpbH37x5Y08A3OAHHo7fLfeRPVwyO3INF7gXrlN/EG6QX4SbaONVuEX9TdjHM6bCbXRheYPXuGL2hHdhDx18CNdwjU/hOvUv4Qb5W7iJO/wKt9Dx6sI+5l5XuI1HL/bHVi+cXqnlQcWhySKTOb+CmV7vkoWt0uqca1vEJlODoF9JU51pW91T7NdD5yIVWZOqCas6SYzKrdnq0AUb5/JRrxeJHoQm5Vhj/rbGAo5xBYUlDowxQhhkiMro6DtVZvSvsUPCXntWPc3ndFsU1P9zhQEC9M9cU7qy0nk6T4E9XxtSdXQrbsuelDSRXs1JErJCXta2VELqATZlV44RelzRiT8oZ0j/AAlabsgAAAB4nGNgYoAALgbsgJWRiZGZkYWRlZGNgbGCuzw1MykzMb8kU1eXs7A0Ma8CiA05CjPz0rPz89IZGADc3QvXAAAA') format('woff')  }  .iconfont {font-family: "iconfont", sans-serif !important;font-size: 16px;font-style: normal;-webkit-font-smoothing: antialiased;-moz-osx-font-smoothing: grayscale;}  .icon-fanxuan:before {content: "\e837";}  .icon-quanxuan:before {content: "\e623";}  .icon-qingkong:before {content: "\e63e";}  #md-content ol > li {list-style: decimal;}  #md-content ul > li {list-style: disc;}
+    </style>
+</head>
+<body class="layui-layout-body">
+<div id="LAY_app">
+    <div class="layui-layout layui-layout-admin">
+        <!--头部导航-->
+        <div th:replace="~{admin/public/header::header}"></div>
+        <!--侧边菜单-->
+        <div th:replace="~{admin/public/sider::sider('writeBlog','blog')}"></div>
+        <!-- 主体内容 -->
+        <div class="layui-body" id="LAY_app_body" style="margin-top: -50px">
+            <div class="layui-fluid">
+                <div class="layui-card">
+                    <div class="layui-card-header">写新闻</div>
+                    <div class="layui-card-body" style="padding: 15px;">
+                        <form class="layui-form layui-form-pane"  lay-filter="component-form-group">
+                            <input type="hidden" value=" " name="id">
+                            <div class="layui-form-item">
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">新闻标题</label>
+                                    <div class="layui-input-inline">
+                                        <input type="text" name="title" lay-verify="title" autocomplete="off"
+                                               placeholder="请输入标题"
+                                               class="layui-input">
+                                    </div>
+                                </div>
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">新闻来源</label>
+                                    <div class="layui-input-block">
+                                        <select name="flag" lay-verify="required">
+                                            <option value="">请选择</option>
+                                            <option value="原创"  >原创</option>
+                                            <option value="转载" >转载</option>
+                                            <option value="翻译" >翻译</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">首图引用</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="headerImageUrl"  autocomplete="off" lay-verify="required|url"
+                                               class="layui-input" >
+                                    </div>
+                                </div>
+                                <button type="button" class="layui-btn layui-btn-sm layui-btn-normal" style="margin-top: -5px" id="uploadBefore">
+                                    <i class="layui-icon">&#xe64a;</i>本地图片
+                                </button>
+                                <button type="button" class="layui-btn layui-btn-sm layui-btn-normal" style="margin-top: -5px" id="upload">
+                                    <i class="layui-icon">&#xe67c;</i>确认上传
+                                </button>
+                                <button type="button" class="layui-btn layui-btn-sm layui-btn-normal" style="margin-top: -5px" id="randomImage">
+                                    <i class="layui-icon">&#xe64a;</i>随机一图
+                                </button>
+                            </div>
+                            <div class="layui-form-item">
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">作者</label>
+                                    <div class="layui-input-inline">
+                                        <input type="text" name="author"  autocomplete="off"
+                                               placeholder="请输入作者"
+                                               class="layui-input">
+                                    </div>
+                                </div>
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">转载地址</label>
+                                    <div class="layui-input-inline">
+                                        <input type="text" name="fromLink"  autocomplete="off"
+                                               placeholder="如果文章为转载请输入"
+                                               class="layui-input">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-form-item layui-form-text">
+                                <div class="layui-input-block" id="md-content" style="z-index: 1">
+                                    <textarea name="content" id="md" class="layui-textarea"
+                                        style="display: none"></textarea>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">分类</label>
+                                    <div class="layui-input-block" lay-filter="sortSelect">
+                                        <select name="typeId"  id="thisSelect02" lay-verify="required">
+                                            <option value="">请选择</option>
+                                            <option th:each="type : ${types}" th:value="${type.id}" th:text="${type.typeName}"></option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <a class="layui-btn layui-btn-sm" id="newSort" style="margin-top: -5px">新建分类</a>
+                                <div class="layui-inline" style=" margin-left: 10px">
+                                    <label class="layui-form-label">标签</label>
+                                    <div class="layui-input-block">
+                                        <select name="tagId" multiple lay-search id="thisSelect03">
+                                            <option value=""></option>
+                                            <option th:each="tag : ${tags}" th:value="${tag.id}" th:text="${tag.tagName}"></option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <a class="layui-btn layui-btn-sm layui-btn-normal" id="newTag" style="margin-top: -5px">新建标签</a>
+                            </div>
+                            <div class="layui-form-item" pane="">
+                                <label class="layui-form-label">页面权限</label>
+                                <div class="layui-input-block">
+                                    <input type="checkbox" name="comment" value="true" id="flag01" lay-skin="primary" title="评论">
+                                    <input type="checkbox" name="reprintStatement" value="true" id="flag02" lay-skin="primary" title="转载声明">
+                                    <input type="checkbox" name="appreciation" value="true" id="flag03" lay-skin="primary" title="打赏">
+                                    <input type="checkbox" name="commend" value="true" id="flag04" lay-skin="primary" title="推荐">
+                                </div>
+                            </div>
+                            <div class="layui-form-item layui-form-text">
+                                <label class="layui-form-label">新闻简介(描述)</label>
+                                <div class="layui-input-block">
+                                    <textarea name="description" id="description" placeholder="请输入内容" class="layui-textarea"></textarea>
+                                </div>
+                            </div>
+                            <div class="layui-form-item layui-layout-admin" style="z-index: 0">
+                                <div class="layui-input-block" style="z-index: 0">
+                                    <div class="layadmin-text-center"
+                                         style="margin-left: 500px;margin-top:50px;z-index: 0 !important;">
+                                        <button class="layui-btn layui-btn-normal" lay-submit=""
+                                                lay-filter="component-form-demo1">发布
+                                        </button>
+                                        <button class="layui-btn layui-btn-danger" lay-submit=""
+                                                lay-filter="component-form-demo2" id="saveBtn">保存
+                                        </button>
+                                        <button class="layui-btn" onclick="window.history.go(-1)" >返回
+                                        </button>
+                                        <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+<script th:src="@{/layuiadmin/layui/layui.js}"></script>
+<script th:src="@{/layuiadmin/editormd/editormd.min.js}"></script>
+<script>
+    $(function () {
+        setInterval( function() {
+            $.ajax({
+                type: 'GET',
+                url: '/admin/blog/keepAlive',
+                data: {},
+                success: function () {
+
+                },
+            });
+            console.log("keepAlive");
+        }, 1000 * 60 * 29);
+    });
+</script>
+<script>
+    $(function () {
+        $('#sideMenu').attr('style', 'z-index:0;');
+        $('#header').attr('style', 'z-index:0;');
+        const contentEditor = editormd("md-content", {
+            width: "100%",
+            height: 640,
+            syncScrolling: "single",
+            path: '/layuiadmin/editormd/lib/',
+            emoji: true
+        });
+        const inputs = $('input');
+        inputs.focus(function () {
+            $('#md').blur();
+        });
+        const  description = $('#description');
+        description.click(function () {
+            $(this).focus();
+            $('#md').blur();
+        });
+        description.focus(function () {
+            $('#md').blur();
+        });
+        inputs.click(function () {
+            $(this).focus();
+            $('#md').blur();
+        });
+    });
+    layui.config({
+        base: '/layuiadmin/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use(['index', 'form', 'layer','laydate','upload'], function () {
+        const $ = layui.$
+            , layer = layui.layer
+            , laydate = layui.laydate
+            , form = layui.form
+            , upload = layui.upload;
+
+        $('#newSort').click(function () {
+            parent.layer.open({
+                type: 2,
+                title: '添加分类',
+                shadeClose: true,
+                shade: 0.8,
+                area: ['20%', '20%'],
+                content: '/admin/addSort',
+                zIndex: layer.zIndex,
+                success: function (layero) {
+                    layer.setTop(layero);
+                },
+                end: function () {
+                    form.render(null, 'component-form-group');
+                    form.render('select','sortSelect');
+                }
+            });
+        });
+        $('#newTag').click(function () {
+            parent.layer.open({
+                type: 2,
+                title: '添加标签',
+                shadeClose: true,
+                shade: 0.8,
+                area: ['20%', '20%'],
+                content: '/admin/addTag',
+                zIndex: layer.zIndex,
+                success: function (layero) {
+                    layer.setTop(layero);
+                },
+                end: function () {
+                    form.render(null, 'component-form-group');
+                    form.render('select','sortSelect');
+                }
+            });
+        });
+        upload.render({
+            elem: '#uploadBefore'
+            ,url: '/admin/upload'
+            ,auto: false
+            ,bindAction: '#upload'
+            ,done: function(res, index, upload){ //上传后的回调
+                let json;
+                if ((typeof res === 'string') && res.constructor === String){
+                    if (res.charAt(0) === '<'){
+                        layer.msg('服务器异常',{
+                            icon: 5
+                        });
+                        return;
+                    }
+                    json = JSON.parse(res);
+                }else{
+                    json = res;
+                }
+                if (json.code === 2){
+                    layer.msg(json.msg,{
+                        icon: 5
+                    });
+                    return;
+                }
+                if (json.code === 1){
+                    let url = json.msg;
+                    layer.msg('图片上传成功',{
+                        icon: 6
+                        ,time: 500
+                    },function () {
+                        $('input[name = "headerImageUrl"]').val(url);
+                    })
+                }
+            }
+            ,choose: function (obj) {
+                obj.preview(function(index, file, result){
+                    parent.layer.open({
+                        type: 1,
+                        title: '预览',
+                        skin: 'layui-layer-rim', //加上边框
+                        area: ['600px', '400px'], //宽高
+                        content: '<img src="' + result + '" alt="" width="600" height="400"/>'
+                    });
+                });
+            }
+            ,accept: 'images' //允许上传的文件类型
+        });
+       form.render(null, 'component-form-group');
+        laydate.render({
+            elem: '#LAY-component-form-group-date'
+        });
+        /* 自定义验证规则 */
+        form.verify({
+            title: function (value) {
+                if (value.length < 5) {
+                    return '标题不得少于五个字符';
+                }
+            }
+        });
+        function isUrl(str_url){
+            const strRegex = "^((https|http|ftp|rtsp|mms)?://)"
+                + "?(([0-9a-z_!~*'().&=+$%-]+: )?[0-9a-z_!~*'().&=+$%-]+@)?" //ftp的user@
+                + "(([0-9]{1,3}\.){3}[0-9]{1,3}" // IP形式的URL- 199.194.52.184
+                + "|" // 允许IP和DOMAIN（域名）
+                + "([0-9a-z_!~*'()-]+\.)*" // 域名- www.
+                + "([0-9a-z][0-9a-z-]{0,61})?[0-9a-z]\." // 二级域名
+                + "[a-z]{2,6})" // first level domain- .com or .museum
+                + "(:[0-9]{1,4})?" // 端口- :80
+                + "((/?)|" // a slash isn't required if there is no file name
+                + "(/[0-9a-z_!~*'().;?:@&=+$,%#-]+)+/?)$";
+            const re=new RegExp(strRegex);
+            //re.test()
+            return re.test(str_url);
+        }
+        $('#randomImage').click(function () {
+            const imageInput = $('input[name="headerImageUrl"]');
+            let index = localStorage.getItem('typeIndex');
+            let headerImage;
+            if (index === null || index === undefined){
+                index = '1';
+                let numberIndex = parseInt(index);
+                if (numberIndex %2 === 0){
+                    headerImage = getTopImage('二次元');
+                }else if (numberIndex % 3 === 0){
+                    headerImage = getTopImage('风景');
+                }else{
+                    headerImage = getTopImage('美女');
+                }
+                localStorage.setItem('typeIndex',(numberIndex+1)+'');
+            }else{
+                let numberIndex = parseInt(index);
+                if (numberIndex %2 === 0){
+                    headerImage = getTopImage('二次元');
+                }else if (numberIndex % 3 === 0){
+                    headerImage = getTopImage('风景');
+                }else{
+                    headerImage = getTopImage('美女');
+                }
+                localStorage.setItem('typeIndex',(numberIndex+1)+'');
+            }
+            if (headerImage === null){
+                layer.msg('首图加载失败，请重试或者手动输入',{
+                    icon: 6
+                })
+            }else{
+                imageInput.val(headerImage);
+            }
+        });
+        function getTopImage(type) {
+            let imageUrl = null;
+            $.ajax({
+                type: 'GET',
+                url: 'https://api.66mz8.com/api/rand.acg.php?type='+type+'&format=json',
+                success: function (data) {
+                    let json;
+                    if ((typeof data === 'string') && data.constructor === String){
+                        json = JSON.parse(data);
+                    }else{
+                        json = data;
+                    }
+                    if (json.code === 200){
+                        imageUrl = json.pic_url;
+                    }else{
+                        imageUrl = null;
+                    }
+                },
+                error:function () {
+                    imageUrl = null;
+                },
+                async: false
+            });
+            return imageUrl;
+        }
+        function postAjax(data,type,message){
+            let flag01 = document.getElementById("flag01").checked;
+            let flag02 = document.getElementById("flag02").checked;
+            let flag03 = document.getElementById("flag03").checked;
+            let flag04 = document.getElementById("flag04").checked;
+            data =data.field;
+            let array = [];
+            let oldArray = data.tagId;
+            for (let i = 0; i < oldArray.length ; i++) {
+                array[i] = oldArray[i];
+            }
+            let index;
+            $.ajax({
+                type: 'POST',
+                url: '/admin/blog/'+type,
+                data :
+                    {
+                        'id' : data.id,
+                        'title': data.title,
+                        'flag' : data.flag,
+                        'headerImageUrl' : data.headerImageUrl,
+                        'content' : data.content,
+                        'typeId' : data.typeId,
+                        'tagIds' : array,
+                        'comment' : flag01,
+                        'reprintStatement' : flag02,
+                        'appreciation' : flag03,
+                        'commend' : flag04,
+                        'save' : false,
+                        'description': data.description,
+                        'author': data.author,
+                        'fromLink':data.fromLink
+                    },
+                beforeSend: function(){
+                   index =  layer.msg('提交中', {
+                        icon: 16
+                        ,shade: 0.01
+                    });
+                },
+                success: function (data) {
+                    let json;
+                    if ((typeof data === 'string') && data.constructor === String){
+                        if (data.charAt(0) === '<'){
+                            layer.msg('服务器请求异常',{
+                                icon: 5
+                            });
+                            return;
+                        }
+                        json = JSON.parse(data);
+                    }else json = data;
+                    if (json.code === 1){
+                        layer.msg(message,{
+                            icon: 6
+                        });
+                        return;
+                    }
+                    if (json.code === 2){
+                        layer.close(index);
+                        layer.msg(json.msg,{
+                            icon: 5
+                        });
+                    }
+                },
+                error: function () {
+                    layer.close(index);
+                    layer.msg('服务器错误请重新尝试',{
+                        icon: 5
+                    });
+                }
+            });
+        }
+        /* 监听提交 */
+        form.on('submit(component-form-demo1)', function (data) {
+            postAjax(data,'publish','发布成功');
+            return false;
+        });
+        form.on('submit(component-form-demo2)', function (data) {
+           postAjax(data,'save','保存成功');
+           return false;
+        });
+    });
+</script>
+</body>
+</html>

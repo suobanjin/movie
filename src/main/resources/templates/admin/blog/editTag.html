@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>编辑标签</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" th:href="@{/layuiadmin/layui/css/layui.css}" media="all">
+</head>
+<body>
+<form class="layui-form layui-form-pane"  lay-filter="component-form-group">
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">文章标签</label>
+            <div class="layui-input-inline">
+                <input type="text" name="title" lay-verify="title" autocomplete="off"
+                       class="layui-input" id="tag">
+            </div>
+        </div>
+    </div>
+    <a class="layui-btn " id="newTag" style="margin-left: 130px">确认修改</a>
+</form>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+<script th:src="@{/layuiadmin/layui/layui.js}"></script>
+<script th:src="@{/js/me.js}"></script>
+<script>
+    layui.use(['layer'],function () {
+        var $ = layui.$
+            ,layer = layui.layer;
+        let id = $.getUrlParam('id');
+        let tagName = $.getUrlParamCN('tagName');
+        $('input[type="text"]').val(tagName);
+        const button = $('#newTag');
+        button.click(function () {
+            const str = $('#tag').val();
+            if (str.length === 0){
+                layer.msg('请先输入一个分类');
+            }
+            $.ajax({
+                type: 'GET',
+                url: '/admin/editOneTag/'+id + '/'+str,
+                data: {},
+                success: function (data) {
+                    let json;
+                    if ((typeof data === 'string') && data.constructor === String){
+                        json = JSON.parse(data);
+                    }else{
+                        json = data;
+                    }
+                    if (json.code === 1){
+                        layer.msg('编辑成功',{
+                            icon: 6
+                        })
+                    }else if (json.code === 2){
+                        layer.msg(json.msg,{
+                            icon: 5
+                        });
+                    }
+                },
+                error: function () {
+                    layer.msg('服务器异常',{
+                        icon: 5
+                    });
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>
